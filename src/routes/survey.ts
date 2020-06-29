@@ -46,6 +46,21 @@ surveysRouter.post("/", checkAdmin, async (req: Request, res: Response) => {
   }
 });
 
+// Get survey endpoint
+surveysRouter.get("/:Id", async (req: Request, res: Response) => {
+  try {
+      // Get surveys from DB
+      const survey: SurveyInterface | null = await Survey.findOne({_id: req.query.Id})
+      if(survey) {
+        res.status(200).send({survey: survey})
+      } else {
+        res.status(404).send({message: "Not Found"})
+      }
+
+    } catch (error) {
+    res.status(500).send({message: "Unknown server error"}) // TODO: Error handling
+  }
+});
 
 // Get all user`s uncompleted surveys
 surveysRouter.get("/", async (req: Request, res: Response) => {
@@ -63,22 +78,6 @@ surveysRouter.get("/", async (req: Request, res: Response) => {
     res.status(500).send({message: "Unknown server error"}) // TODO: Error handling
   }
 })
-
-// Get survey endpoint
-surveysRouter.get("/:Id", async (req: Request, res: Response) => {
-  try {
-      // Get surveys from DB
-      const survey: SurveyInterface | null = await Survey.findOne({_id: req.query.Id})
-      if(survey) {
-        res.status(200).send({survey: survey})
-      } else {
-        res.status(404).send({message: "Not Found"})
-      }
-
-    } catch (error) {
-    res.status(500).send({message: "Unknown server error"}) // TODO: Error handling
-  }
-});
 
 // Submit survey answer endpoint
 surveysRouter.post("/postAnswer", async (req: Request, res: Response) => {
