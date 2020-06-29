@@ -67,7 +67,8 @@ surveysRouter.get("/all", async (req: Request, res: Response) => {
 surveysRouter.get("/:Id", async (req: Request, res: Response) => {
   try {
       // Get surveys from DB
-      const survey: SurveyInterface | null = await Survey.findOne({_id: req.query.Id})
+      console.log(req.query.Id, req.params.Id)
+      const survey: SurveyInterface | null = await Survey.findOne({_id: req.params.Id})
       if(survey) {
         res.status(200).send({survey: survey})
       } else {
