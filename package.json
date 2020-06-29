@@ -1,0 +1,47 @@
+{
+  "name": "testtask-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watchTS": "tsc -w",
+    "watchNode": "nodemon buildBack/server.js",
+    "build": "rimraf buildBack && tsc",
+    "postinstall": "npm run build",
+    "start": "node buildBack/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProbablyNextTime/TestTask-Backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProbablyNextTime/TestTask-Backend/issues"
+  },
+  "homepage": "https://github.com/ProbablyNextTime/TestTask-Backend#readme",
+  "dependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/express": "^4.17.6",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/mongoose": "^5.7.27",
+    "@types/passport": "^1.0.3",
+    "@types/passport-jwt": "^3.0.3",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-slack": "^1.0.11",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.20",
+    "nodemon": "^2.0.4",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "rimraf": "^3.0.2",
+    "ts-node-dev": "^1.0.0-pre.49",
+    "typescript": "^3.9.5"
+  },
+  "engines": {
+    "node": "14.x"
+  }
+}
