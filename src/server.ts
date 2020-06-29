@@ -79,9 +79,9 @@ app.get('/*', (req, res) => {
 });
 
 // default endpoint
-app.get("*", (req: Request, res: Response) => {
-  res.status(404).send("Not found");
-});
+// app.get("*", (req: Request, res: Response) => {
+//   res.status(404).send("Not found");
+// });
 
 // set headers for option requests
 app.options("/*", function(req, res, next){
