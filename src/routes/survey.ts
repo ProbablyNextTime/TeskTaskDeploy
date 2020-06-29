@@ -46,6 +46,23 @@ surveysRouter.post("/", checkAdmin, async (req: Request, res: Response) => {
   }
 });
 
+// Get all user`s uncompleted surveys
+surveysRouter.get("/all", async (req: Request, res: Response) => {
+  try {
+      // get user from DB
+      const user: UserInterface | null = await User.findOne({username: req.user?.username});
+      if(user) {
+        // If user exists get all surveys that he has already completed
+        const completedSurveys: mongoose.Types.ObjectId[] =  user.completedSurveys.map( survey => survey.surveyId );
+        // Get all surveys that user hasn't completed yet
+        const uncompletedSurveys: SurveyInterface[] | null = await Survey.find({_id : {$exists: true, $nin: completedSurveys}});
+        res.status(200).send({surveys: uncompletedSurveys});
+      }
+    } catch (error) {
+    res.status(500).send({message: "Unknown server error"}) // TODO: Error handling
+  }
+})
+
 // Get survey endpoint
 surveysRouter.get("/:Id", async (req: Request, res: Response) => {
   try {
@@ -61,23 +78,6 @@ surveysRouter.get("/:Id", async (req: Request, res: Response) => {
     res.status(500).send({message: "Unknown server error"}) // TODO: Error handling
   }
 });
-
-// Get all user`s uncompleted surveys
-surveysRouter.get("/", async (req: Request, res: Response) => {
-  try {
-      // get user from DB
-      const user: UserInterface | null = await User.findOne({username: req.user?.username});
-      if(user) {
-        // If user exists get all surveys that he has already completed
-        const completedSurveys: mongoose.Types.ObjectId[] =  user.completedSurveys.map( survey => survey.surveyId );
-        // Get all surveys that user hasn't completed yet
-        const uncompletedSurveys: SurveyInterface[] | null = await Survey.find({_id : {$exists: true, $nin: completedSurveys}});
-        res.status(200).send({surveys: uncompletedSurveys});
-      }
-    } catch (error) {
-    res.status(500).send({message: "Unknown server error"}) // TODO: Error handling
-  }
-})
 
 // Submit survey answer endpoint
 surveysRouter.post("/postAnswer", async (req: Request, res: Response) => {
