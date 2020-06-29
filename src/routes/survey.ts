@@ -64,11 +64,11 @@ surveysRouter.get("/all", async (req: Request, res: Response) => {
 })
 
 // Get survey endpoint
-surveysRouter.get("/:Id", async (req: Request, res: Response) => {
+surveysRouter.get("/", async (req: Request, res: Response) => {
   try {
       // Get surveys from DB
       console.log(req.query.Id, req.params.Id)
-      const survey: SurveyInterface | null = await Survey.findOne({_id: req.params.Id})
+      const survey: SurveyInterface | null = await Survey.findOne({_id: req.query.Id})
       if(survey) {
         res.status(200).send({survey: survey})
       } else {
