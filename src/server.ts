@@ -49,7 +49,7 @@ app.post("/api/login", async (req: Request, res: Response) => {
 });
 
 // SignUp newUser
-app.post("/api//signUp", async (req: Request, res: Response) => {
+app.post("/api/signUp", async (req: Request, res: Response) => {
   try {
     const user: UserInterface | null = await User.findOne({username: req.body.user.username})
 
