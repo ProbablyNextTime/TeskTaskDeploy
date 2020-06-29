@@ -20,13 +20,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Defining subRoute for surveys
 app.use("/api/surveys", surveysRouter);
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '../build')));
 
 // login user
 app.post("/api/login", async (req: Request, res: Response) => {
   try {
     const user: UserInterface | null = await User.findOne({username: req.body.user.username});
-    console.log(user, "dadaya")
     if(user && bcrypt.compareSync(req.body.user.password, user.password)) {
       // Sign jwt token
       const token = jwt.sign({user : user}, process.env.SECRET_KEY || "SECRET");
